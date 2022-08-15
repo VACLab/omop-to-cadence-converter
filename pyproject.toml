@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "omop-to-cadence-converter"
+version = "0.1.0"
+description = ""
+authors = ["Max Natthawut Adulyanukosol <na399@unc.edu>"]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+pandas = "^1.4.3"
+psycopg2 = "^2.9.3"
+duckdb = "^0.4.0"
+
+[tool.poetry.dev-dependencies]
+pytest = "^5.2"
+jupyter = "^1.0.0"
+ipython-sql = "^0.4.1"
+SQLAlchemy = "^1.4.40"
+duckdb-engine = "^0.3.3"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
