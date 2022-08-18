@@ -9,6 +9,7 @@ python = "^3.9"
 pandas = "^1.4.3"
 psycopg2 = "^2.9.3"
 duckdb = "^0.4.0"
+pyarrow = "^9.0.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"

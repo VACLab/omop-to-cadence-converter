@@ -1,5 +1,5 @@
 import duckdb
-import pandas as pd
+from pyarrow import csv
 
 # TODO: move connections to separate file
 DIR_CONCEPT = 'data/eunomia/CONCEPT.csv'
@@ -70,15 +70,16 @@ query_events = f'''
 	SELECT 
 		PERSON_ID AS id,
 		CONDITION_CONCEPT_ID,
-		CAST(CONDITION_START_DATE AS DATETIME) + INTERVAL 1 SECOND AS date
+		-- CAST(CONDITION_START_DATE AS DATETIME) + INTERVAL 1 SECOND AS date
+		CAST(CONDITION_START_DATE AS DATETIME) AS date
 	FROM {set_source_connector(DIR_CONDITION_OCCURRENCE)}
 	)
 
 	SELECT
-	stg_condition.id,
-	stg_condition.date,
-	concept.VOCABULARY_ID AS codeclass,
-	concept.CONCEPT_CODE AS code
+		stg_condition.id,
+		stg_condition.date,
+		concept.VOCABULARY_ID AS codeclass,
+		concept.CONCEPT_CODE AS code
 	FROM stg_condition
 	LEFT JOIN {set_source_connector(DIR_CONCEPT)} AS concept
 	ON stg_condition.CONDITION_CONCEPT_ID = concept.CONCEPT_ID
@@ -90,7 +91,7 @@ def convert_omop_to_cadence(query):
 	return conn.execute(query)
 
 def export_as_csv(query, filename):
-	convert_omop_to_cadence(query).df().to_csv(filename, index=False)
+	csv.write_csv(convert_omop_to_cadence(query).arrow(), filename)
 
 if __name__ == '__main__':
 	export_as_csv(query_attributes, 'out/python/attributes.csv')
