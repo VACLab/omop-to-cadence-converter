@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "omop-to-cadence-converter"
-version = "0.1.0"
+version = "0.2.0"
 description = ""
 authors = ["Max Natthawut Adulyanukosol <na399@unc.edu>"]
 
@@ -15,7 +15,6 @@ pyarrow = "^9.0.0"
 pytest = "^5.2"
 jupyter = "^1.0.0"
 ipython-sql = "^0.4.1"
-SQLAlchemy = "^1.4.40"
 duckdb-engine = "^0.3.3"
 
 [build-system]
