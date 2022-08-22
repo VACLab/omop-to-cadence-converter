@@ -9,7 +9,7 @@ def attributes(person_csv_path=config['CSV']['TABLE_PERSON'],
 	return f'''
 		WITH stg_person AS (
 			SELECT 
-				PERSON_ID AS id,
+				CAST(PERSON_ID AS VARCHAR) AS id,
 				GENDER_CONCEPT_ID,
 				{year_for_age_calculation} - YEAR_OF_BIRTH AS age,
 				-- RACE_CONCEPT_IDs are not in Eunomia's CONCEPT table
@@ -61,7 +61,7 @@ def events(condition_occurrence_csv_path=config['CSV']['TABLE_CONDITION_OCCURREN
 	return f'''
 		WITH stg_condition AS (
 		SELECT 
-			PERSON_ID AS id,
+			CAST(PERSON_ID AS VARCHAR) AS id,
 			CONDITION_CONCEPT_ID,
 			CAST(CONDITION_START_DATE AS DATETIME) AS date
 		FROM read_csv_auto('{condition_occurrence_csv_path}')
