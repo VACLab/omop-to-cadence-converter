@@ -3,9 +3,12 @@ import configparser
 config = configparser.ConfigParser()
 config.read('config/config.ini')
 
-def attributes(person_table=config['POSTGRES']['TABLE_PERSON'],
-					 concept_table=config['POSTGRES']['TABLE_CONCEPT'],
-					 year_for_age_calculation=config['DEFAULT']['YEAR_FOR_AGE_CALCULATION']):
+
+def attributes(
+    person_table=config['POSTGRES']['TABLE_PERSON'],
+    concept_table=config['POSTGRES']['TABLE_CONCEPT'],
+    year_for_age_calculation=config['DEFAULT']['YEAR_FOR_AGE_CALCULATION']
+):
 	return f'''
 		CREATE TABLE cadence.attributes AS
 		WITH stg_person AS (
@@ -68,8 +71,11 @@ def attributes(person_table=config['POSTGRES']['TABLE_PERSON'],
 		SELECT * FROM unpivoted
 	'''
 
-def events(condition_occurrence_table=config['POSTGRES']['TABLE_CONDITION_OCCURRENCE'],
-				 concept_table=config['POSTGRES']['TABLE_CONCEPT']):
+
+def events(
+    condition_occurrence_table=config['POSTGRES']['TABLE_CONDITION_OCCURRENCE'],
+    concept_table=config['POSTGRES']['TABLE_CONCEPT']
+):
 	return f'''
 		CREATE TABLE cadence.events AS 
 		WITH stg_condition AS (

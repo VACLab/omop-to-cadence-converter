@@ -3,9 +3,12 @@ import configparser
 config = configparser.ConfigParser()
 config.read('config/config.ini')
 
-def attributes(person_csv_path=config['CSV']['TABLE_PERSON'],
-					 concept_csv_path=config['CSV']['TABLE_CONCEPT'],
-					 year_for_age_calculation=config['DEFAULT']['YEAR_FOR_AGE_CALCULATION']):
+
+def attributes(
+    person_csv_path=config['CSV']['TABLE_PERSON'],
+    concept_csv_path=config['CSV']['TABLE_CONCEPT'],
+    year_for_age_calculation=config['DEFAULT']['YEAR_FOR_AGE_CALCULATION']
+):
 	return f'''
 		WITH stg_person AS (
 			SELECT 
@@ -56,8 +59,11 @@ def attributes(person_csv_path=config['CSV']['TABLE_PERSON'],
 		SELECT * FROM unpivoted
 	'''
 
-def events(condition_occurrence_csv_path=config['CSV']['TABLE_CONDITION_OCCURRENCE'],
-				 concept_csv_path=config['CSV']['TABLE_CONCEPT']):
+
+def events(
+    condition_occurrence_csv_path=config['CSV']['TABLE_CONDITION_OCCURRENCE'],
+    concept_csv_path=config['CSV']['TABLE_CONCEPT']
+):
 	return f'''
 		WITH stg_condition AS (
 		SELECT 
