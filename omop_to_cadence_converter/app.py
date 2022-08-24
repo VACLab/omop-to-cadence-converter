@@ -82,8 +82,14 @@ with st.form("config"):
 		st.write(df_attributes.describe(include='all').fillna("").astype("str"))
 
 		st.altair_chart(
-		    alt.Chart(df_attributes[df_attributes['variable'] == 'age'],
-		              title='Age distribution').mark_bar().encode(alt.X('value:Q', bin=True, title='Age'), y='count()'),
+		    alt.Chart(df_attributes[df_attributes['variable'] == 'age'], title='Age distribution').mark_bar().encode(
+		        alt.X('value:Q', bin=True, title='Age'),
+		        y='count()',
+		        tooltip=[
+		            alt.Tooltip('value:Q', bin=True, title='Age'),
+		            alt.Tooltip('count()', title='Count'),
+		        ]
+		    ).interactive(),
 		    use_container_width=True
 		)
 
@@ -96,8 +102,13 @@ with st.form("config"):
 		                      sort=alt.EncodingSortField(field="value", op="count", order='descending'),
 		                      axis=alt.Axis(labelAngle=0)
 		                  ),
-		                  y='count()'
-		              ),
+		                  y='count()',
+		                  tooltip=[
+		                      alt.Tooltip('value:N', title='Gender'),
+		                      alt.Tooltip('count()', title='Count'),
+		                  ],
+		                  color=alt.Color('value:N', legend=None)
+		              ).interactive(),
 		    use_container_width=True
 		)
 
@@ -109,7 +120,12 @@ with st.form("config"):
 		            sort=alt.EncodingSortField(field="value", op="count", order='descending'),
 		            axis=alt.Axis(labelAngle=0)
 		        ),
-		        y='count()'
+		        y='count()',
+		        tooltip=[
+		            alt.Tooltip('value:N', title='Race'),
+		            alt.Tooltip('count()', title='Count'),
+		        ],
+		        color=alt.Color('value:N', legend=None)
 		    ),
 		    use_container_width=True
 		)
@@ -130,15 +146,23 @@ with st.form("config"):
 		st.write(df_events.describe(include='all', datetime_is_numeric=True).fillna("").astype("str"))
 
 		st.altair_chart(
-		    alt.Chart(df_events,
-		              title='Year distribution').mark_bar().encode(alt.X('year(date):T', title='Year'), y='count()'),
+		    alt.Chart(df_events, title='Year distribution').mark_bar().encode(
+		        alt.X('year(date):T', title='Year'),
+		        y='count()',
+		        tooltip=[alt.Tooltip('year(date):T', title='Year'),
+		                 alt.Tooltip('count()', title='Count')]
+		    ).interactive(),
 		    use_container_width=True
 		)
 
 		st.altair_chart(
 		    alt.Chart(df_events, title='Code Class distribution').mark_bar().encode(
-		        alt.X('codeclass:N', title='Code Class', axis=alt.Axis(labelAngle=0)), y='count()'
-		    ),
+		        alt.X('codeclass:N', title='Code Class', axis=alt.Axis(labelAngle=0)),
+		        y='count()',
+		        tooltip=[alt.Tooltip('codeclass:N', title='Code Class'),
+		                 alt.Tooltip('count()', title='Count')],
+		        color=alt.Color('codeclass:N', legend=None)
+		    ).interactive(),
 		    use_container_width=True
 		)
 
@@ -150,8 +174,11 @@ with st.form("config"):
 		            sort=alt.EncodingSortField(field="code", op="count", order='descending'),
 		            axis=alt.Axis(labelAngle=0)
 		        ),
-		        x='count()'
-		    ),
+		        x='count()',
+		        tooltip=[alt.Tooltip('code:N', title='Code'),
+		                 alt.Tooltip('count()', title='Count')],
+		        color=alt.Color('code:N', legend=None)
+		    ).interactive(),
 		    use_container_width=True
 		)
 
